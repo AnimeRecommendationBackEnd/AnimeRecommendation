@@ -1,8 +1,5 @@
-from flask import request, current_app, jsonify
 
-from app.User import user
-from app.models import *
-from app.utils import *
+from app.User import user,jsonify,request,current_app,random_filename,User,db,os
 
 
 @user.route('/create', methods=['POST'])
@@ -12,7 +9,7 @@ def create():
         password = request.form.get('password')
         repeatpd = request.form.get('repeatpd')
         avatar = request.files.get('avatar')
-        email = request.form.get('eamil')
+        email = request.form.get('email')
         if password == repeatpd:
             user = User(
                 name=name,
@@ -29,3 +26,4 @@ def create():
             return jsonify({'event': 'success'})
         return jsonify({'error': 'password error'})
     return jsonify({'error': 'method error'})
+
