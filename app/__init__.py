@@ -1,5 +1,5 @@
 from flask import Flask
-# from app.extensions import *
+from app.extensions import *
 from app.models import *
 from app.Anime import anime
 from app.User import user
@@ -19,6 +19,7 @@ def create_app():
 
 def register_extensions(app):
     db.init_app(app)
+    mail.init_app(app)
 
 
 def register_blueprint(app):
