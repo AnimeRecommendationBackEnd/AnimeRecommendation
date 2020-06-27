@@ -15,32 +15,32 @@ def adminLogin():
         username = form.username.data
         password = form.password.data
 
-        admin = Admin.query.filter_by(username=username)
+        admin = Admin.query.filter_by(name=username)
         if admin.count() == 0:
             flash('用户不存在')
 
         else:
-            print(admin.first().checkPassword(password))
+            # print(admin.first().checkPassword(password))
             if admin.first().checkPassword(password):
                 session['username'] = username
-                return redirect(url_for('admin.adminIndex', username=username))
+                return redirect(url_for('admin.adminIndex', name=username))
             else:
                 flash('密码错误')
 
     return render_template('adminLogin.html', form=form)
 
-@admin.route('/logout/<username>', methods=['GET'])
-def adminLogout(username):
+@admin.route('/logout/<name>', methods=['GET'])
+def adminLogout(name):
     # 身份验证
-    adminLoginConfirm(username)
+    adminLoginConfirm(name)
     session.pop('username')
     return redirect(url_for('admin.adminLogin'))
 
-@admin.route('/index/<username>')
-def adminIndex(username):
-    adminLoginConfirm(username)
+@admin.route('/index/<name>')
+def adminIndex(name):
+    adminLoginConfirm(name)
 
     pass
 
-    return render_template('adminIndex.html', username=username)
+    return render_template('adminIndex.html', name=name)
 
