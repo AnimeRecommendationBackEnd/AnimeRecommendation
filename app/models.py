@@ -14,3 +14,9 @@ class User(db.Model):
     #以用户名进行加密
     def make_token(self):
         return pwd_context.encrypt(self.name)
+
+class Admin(db.Model):
+    __tablename__ = 'admin'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
+    password = db.Column(db.String(20))
