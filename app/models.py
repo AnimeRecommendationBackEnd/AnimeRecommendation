@@ -27,3 +27,12 @@ class Admin(db.Model):
         else:
             return False
 
+class finishedAnime(db.Model):
+    __tablename__ = 'finishedanime'
+    id = db.Column(db.Integer, primary_key=True)
+    bvid = db.Column(db.String(50))
+    picture = db.Column(db.String(100))
+    title = db.Column(db.String(100))
+    introduce = db.Column(db.Text)
+    createtime = db.Column(db.String(20))
+    isShow = db.Column(db.Boolean, default=True)

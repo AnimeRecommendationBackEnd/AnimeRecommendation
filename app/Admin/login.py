@@ -12,18 +12,18 @@ def adminLoginConfirm(username):
 def adminLogin():
     form = adminLoginForm()
     if form.validate_on_submit():
-        username = form.username.data
+        name = form.name.data
         password = form.password.data
 
-        admin = Admin.query.filter_by(name=username)
+        admin = Admin.query.filter_by(name=name)
         if admin.count() == 0:
             flash('用户不存在')
 
         else:
             # print(admin.first().checkPassword(password))
             if admin.first().checkPassword(password):
-                session['username'] = username
-                return redirect(url_for('admin.adminIndex', name=username))
+                session['username'] = name
+                return redirect(url_for('admin.adminIndex', name=name))
             else:
                 flash('密码错误')
 
@@ -36,11 +36,5 @@ def adminLogout(name):
     session.pop('username')
     return redirect(url_for('admin.adminLogin'))
 
-@admin.route('/index/<name>')
-def adminIndex(name):
-    adminLoginConfirm(name)
 
-    pass
-
-    return render_template('adminIndex.html', name=name)
 
