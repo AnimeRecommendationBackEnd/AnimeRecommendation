@@ -136,6 +136,7 @@
       <workItem from="1593415621630" duration="7856000" />
       <workItem from="1593439114355" duration="2898000" />
       <workItem from="1593442548806" duration="1625000" />
+      <workItem from="1593444404444" duration="243000" />
     </task>
     <servers />
   </component>
@@ -205,7 +206,7 @@
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1593246091944" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/AnimeRecommendation$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1593443572624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AnimeRecommendation$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1593444498194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AnimeRecommendation$app.coverage" NAME="app Coverage Results" MODIFIED="1593162011231" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
