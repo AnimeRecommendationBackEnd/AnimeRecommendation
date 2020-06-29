@@ -8,8 +8,8 @@
 <h1>管理员系统</h1>
 <form method="POST">
     {{ form.csrf_token() }}
-    {{ form.username.label }}{{ form.username }}<br>
-    {% for error in form.username.errors %}
+    {{ form.name.label }}{{ form.name }}<br>
+    {% for error in form.name.errors %}
         <small style="color: red">{{ error }}</small>
     {% endfor %}<br>
     {{ form.password.label }}{{ form.password }}<br>

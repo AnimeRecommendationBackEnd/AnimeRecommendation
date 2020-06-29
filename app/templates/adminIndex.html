@@ -2,9 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
     <title>Title</title>
+    <style>
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-
+<a href="/admin/logout/{{ name }}">退出</a>
+<hr>
+<table>
+<a href="/admin/index/refreshfinishedanime/{{ name }}">更新完结动画</a>
+<thead>
+    <tr>
+        <th>封面</th>
+        <th>bvid</th>
+        <th>标题</th>
+        <th>开始时间</th>
+        <th>介绍</th>
+    </tr>
+    </thead>
+<tbody>
+{% for data in finishedAnimeDatas %}
+<tr>
+    <td><img src="{{ data.picture }}" style="height: 80px"></td>
+    <td>{{ data.bvid }}</td>
+    <td>{{ data.title }}</td>
+    <td>{{ data.createtime }}</td>
+    <td>{{ data.introduce }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
 </body>
 </html>

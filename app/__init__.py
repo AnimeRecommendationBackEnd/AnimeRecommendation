@@ -36,13 +36,4 @@ def register_command(app):
         db.create_all()
         click.echo('create success')
 
-    @app.cli.command()
-    def addadmin():
-        admin1 = Admin(name='admin', password='admin')
-        try:
-            db.session.add(admin1)
-            db.session.commit()
-            click.echo('add success')
-        except:
-            click.echo('add fail')
 
