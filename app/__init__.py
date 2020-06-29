@@ -1,6 +1,6 @@
 from flask import Flask
 from app.extensions import *
-from app.models import *
+from app.models import User,Admin
 from app.Anime import anime
 from app.User import user
 from app.Admin import admin
@@ -11,9 +11,8 @@ def create_app():
     app = Flask(__name__)
     app.config.from_pyfile('settings.py')
 
-    register_blueprint(app)
-    register_command(app)
     register_extensions(app)
+    register_blueprint(app)
     register_command(app)
 
     return app
