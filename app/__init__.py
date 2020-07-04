@@ -20,6 +20,7 @@ def create_app():
 def register_extensions(app):
     db.init_app(app)
     mail.init_app(app)
+    whooshee.init_app(app)
 
 
 def register_blueprint(app):
@@ -34,6 +35,7 @@ def register_command(app):
     def initdb():
         db.drop_all()
         db.create_all()
+        whooshee.reindex()
         click.echo('create success')
 
 

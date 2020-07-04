@@ -47,11 +47,12 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="E:/DIMEI" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Freedom" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\西二合作" />
       <recent name="D:\gitubx\AnimeRecommendation" />
     </key>
   </component>
@@ -100,9 +101,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="try" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AnimeRecommendation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/try.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.app (1)" />
+        <item itemvalue="Python.try" />
         <item itemvalue="Python.app" />
       </list>
     </recent_temporary>
@@ -139,6 +163,14 @@
       <workItem from="1593444404444" duration="374000" />
       <workItem from="1593484369010" duration="67000" />
       <workItem from="1593588042570" duration="211000" />
+      <workItem from="1593588572836" duration="12093000" />
+      <workItem from="1593650762156" duration="2441000" />
+      <workItem from="1593653577294" duration="4891000" />
+      <workItem from="1593673700284" duration="15662000" />
+      <workItem from="1593733329357" duration="6726000" />
+      <workItem from="1593745166450" duration="3136000" />
+      <workItem from="1593759974150" duration="24112000" />
+      <workItem from="1593823732955" duration="1985000" />
     </task>
     <servers />
   </component>
@@ -154,26 +186,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="74" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1593142769564" />
-    <state x="549" y="171" key="FileChooserDialogImpl" timestamp="1593421239406">
+    <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1593676432591">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="171" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1593421239406" />
-    <state width="1493" height="208" key="GridCell.Tab.0.bottom" timestamp="1593444779436">
+    <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1593676432591" />
+    <state x="549" y="171" key="FileChooserDialogImpl" timestamp="1593784578791">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593444779436" />
-    <state width="1493" height="208" key="GridCell.Tab.0.center" timestamp="1593444779436">
+    <state x="549" y="171" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1593784578791" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1593825794727">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1593444779436" />
-    <state width="1493" height="208" key="GridCell.Tab.0.left" timestamp="1593444779436">
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593825794727" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1593825794727">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1593444779436" />
-    <state width="1493" height="208" key="GridCell.Tab.0.right" timestamp="1593444779436">
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1593825794727" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1593825794727">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1593444779436" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1593825794727" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1593825794727">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1593825794727" />
     <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1593144335506">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -194,20 +230,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="212" height="477" key="HiddenNamespacesPopup/0.0.1536.824@0.0.1536.824" timestamp="1593142776277" />
-    <state x="218" y="115" key="SettingsEditor" timestamp="1593076291134">
+    <state x="196" y="14" key="SettingsEditor" timestamp="1593653823213">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="218" y="115" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1593076291134" />
+    <state x="196" y="14" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1593653823213" />
     <state x="461" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1593178904822">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="461" y="241" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1593178904822" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1593246091944">
+    <state x="564" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1593786988079">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1593246091944" />
+    <state x="564" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1593786988079" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1593825080725">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1593825080725" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/$try.coverage" NAME="try Coverage Results" MODIFIED="1593680665650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1593825328430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AnimeRecommendation$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1593444498194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AnimeRecommendation$app.coverage" NAME="app Coverage Results" MODIFIED="1593162011231" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

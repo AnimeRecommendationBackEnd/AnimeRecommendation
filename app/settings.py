@@ -32,3 +32,6 @@ MAIL_PASSWORD = 'tmromcasvenvhgba'
 
 #默认发信人
 MAIL_DEFAULT_SENDER = '通信人<1193299044@qq.com>'
+
+#whooshee最小搜索字数
+WHOOSHEE_MIN_STRING_LEN = 1

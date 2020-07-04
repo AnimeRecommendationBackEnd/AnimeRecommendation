@@ -2,23 +2,22 @@ from datetime import datetime
 
 from passlib.apps import custom_app_context as pwd_context
 
-from app.extensions import db
+from app.extensions import db,whooshee
 
 
 # cascade='all'为当前表删除时，有cascade='all'的外键表也一同删除
 
 # users数据表,用户名以及邮箱唯一
+@whooshee.register_model('name')
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True)
     password = db.Column(db.String(20))
-    avatar = db.Column(db.String(50))
+    avatar = db.Column(db.String(100))
     email = db.Column(db.String(20), unique=True)
     dramas = db.relationship('Drama', back_populates='user', cascade='all')
-    follow_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 关注实现，邻接列表关系
-    follows = db.relationship('User', back_populates='follow', remote_side=[id])
-    follow = db.relationship('User', back_populates='follows', cascade='all')
+    follows = db.relationship('Follow', back_populates='user')
     likes = db.relationship('Likedrama', back_populates='user', cascade='all')  # 点赞
     collects = db.relationship('Collectdrama', back_populates='user', cascade='all')  # 收藏
 
@@ -26,6 +25,14 @@ class User(db.Model):
     def make_token(self):
         return pwd_context.encrypt(self.name)
 
+
+class Follow(db.Model):
+    __tablename__ = "follow"
+    id = db.Column(db.Integer, primary_key=True)
+    followid = db.Column(db.Integer)
+    name = db.Column(db.String(20))
+    userid = db.Column(db.Integer,db.ForeignKey('user.id'))
+    user = db.relationship('User', back_populates='follows')
 
 # 点赞表
 class Likedrama(db.Model):
@@ -35,6 +42,7 @@ class Likedrama(db.Model):
     user = db.relationship('User', back_populates='likes')
     drama_id = db.Column(db.Integer, db.ForeignKey('drama.id'))
     drama = db.relationship('Drama', back_populates='likes')
+    follow = db.Column(db.Boolean,default=False)
 
 
 # 收藏表
@@ -55,10 +63,12 @@ class Admin(db.Model):
 
 
 # 推荐表（问番表）
+@whooshee.register_model('title')
 class Drama(db.Model):
     __tablename__ = "drama"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20))  # 标题
+    animetitle = db.Column(db.String(20))
     content = db.Column(db.Text)  # 内容
     time = db.Column(db.DateTime, default=datetime.utcnow, index=True)  # 时间
     likes = db.relationship('Likedrama', back_populates='drama')  # 点赞
@@ -69,6 +79,10 @@ class Drama(db.Model):
     user = db.relationship('User', back_populates='dramas')  # 发布人
     top = db.Column(db.Integer)  # 置顶的评论id
     anime = db.Column(db.Integer)
+    animedescribe = db.Column(db.Text)
+    animefrom = db.Column(db.Integer)
+    animelink = db.Column(db.String(30))
+    animeseasonid = db.Column(db.String(20))
     solution = db.Column(db.String(10), default=None)  # 问番的解决状态
 
 
@@ -76,7 +90,7 @@ class Drama(db.Model):
 class Photo(db.Model):
     __tablename__ = "photo"
     id = db.Column(db.Integer, primary_key=True)
-    image = db.Column(db.String(50))  # 图片文件名
+    image = db.Column(db.String(100))  # 图片文件名
     drama_id = db.Column(db.Integer, db.ForeignKey('drama.id'))
     drama = db.relationship('Drama', back_populates='photos')
     cover = db.Column(db.Boolean, default=False)  # 封面图片，是就改为True
@@ -88,8 +102,10 @@ class Comment(db.Model):
     __tablename__ = "comment"
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text)  # 内容
+    time = db.Column(db.DateTime,default=datetime.utcnow,index=True)
     author_id = db.Column(db.Integer)  # 评论人id
     author = db.Column(db.String(20))  # 评论人名
+    email = db.Column(db.String(20))
     drama_id = db.Column(db.Integer, db.ForeignKey('drama.id'))
     drama = db.relationship('Drama', back_populates='comments')  # 所在推荐表
 
