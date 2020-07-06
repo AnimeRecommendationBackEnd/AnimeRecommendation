@@ -20,8 +20,9 @@ class User(db.Model):
     follows = db.relationship('Follow', back_populates='user')
     likes = db.relationship('Likedrama', back_populates='user', cascade='all')  # 点赞
     collects = db.relationship('Collectdrama', back_populates='user', cascade='all')  # 收藏
-    animecomments = db.relationship('AnimeComment', backref='anime')
-    animelikes = db.relationship('AnimeComment', backref='anime')
+    animecomments = db.relationship('AnimeComment', backref='user')
+    animelikes = db.relationship('AnimeLike', backref='user')
+    animecommentstars = db.relationship('AnimeCommentStar', backref='user')
 
     # 以用户名进行加密
     def make_token(self):
@@ -132,16 +133,17 @@ class Anime(db.Model):
     # 2：用户推荐
     datafrom = db.Column(db.Integer)
     comments = db.relationship('AnimeComment', backref='anime')
-    likes = db.relationship('AnimeComment', backref='anime')
+    likes = db.relationship('AnimeLike', backref='anime')
     likenum = db.Column(db.Integer, default=0)
 
 
 class AnimeComment(db.Model):
     __tablename__ = 'animecomment'
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer, db.ForeignKey('User.id'))
-    animeId = db.Column(db.Integer, db.ForeignKey('Anime.id'))
+    userId = db.Column(db.Integer, db.ForeignKey('user.id'))
+    animeId = db.Column(db.Integer, db.ForeignKey('anime.id'))
     comment = db.Column(db.TEXT)
+    # time = db.Column(db.DateTime, default=datetime.utcnow)
     stars = db.relationship("AnimeCommentStar", backref='animecomment')
     starnum = db.Column(db.Integer, default=0)
 
@@ -149,21 +151,21 @@ class AnimeComment(db.Model):
 class AnimeLike(db.Model):
     __tablename__ = 'animelike'
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer, db.ForeignKey('User.id'))
-    animeId = db.Column(db.Integer, db.ForeignKey('Anime.id'))
+    userId = db.Column(db.Integer, db.ForeignKey('user.id'))
+    animeId = db.Column(db.Integer, db.ForeignKey('anime.id'))
 
 
 class AnimeCommentStar(db.Model):
     __tablename__ = 'animecommentstar'
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer, db.ForeignKey('User.id'))
-    animeCommentId = db.Column(db.Integer, db.ForeignKey('AnimeComment.id'))
+    userId = db.Column(db.Integer, db.ForeignKey('user.id'))
+    animeCommentId = db.Column(db.Integer, db.ForeignKey('animecomment.id'))
 
 
 class AnimeLog(db.Model):
     __tablename__ = 'adminlog'
     id = db.Column(db.Integer, primary_key=True)
     opreate = db.Column(db.TEXT)
-    time = db.Column(db.DateTime, default=datetime.utcnow())
+    time = db.Column(db.DateTime, default=datetime.utcnow)
 
 
