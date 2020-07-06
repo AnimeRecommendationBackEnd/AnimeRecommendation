@@ -41,6 +41,7 @@ def getAllAnime():
             'mediaId': data.mediaId,
             'link': data.link,
             'isFinish':data.isFinish,
+            'likenum': data.likenum,
             'islike': isLike,
             'tag1': data.tag1,
             'tag2': data.tag2,
@@ -55,9 +56,100 @@ def getAllAnime():
     )
 
 
+@anime.route('/getanime', methods=['GET', 'POST'])
+def getAnime():
+    if request.method == 'GET':
+        animeId = request.args.get('animeid')
+        anime = Anime.query.get(animeId)
+        if anime is None:
+            return jsonify(Event1002())
+        commentlist = []
+        for comment in anime.comments:
+            temp = {
+                'commentid': comment.id,
+                'username': comment.user.name,
+                'comment': comment.comment,
+                # 时间
+                # 'time': comment.time
+                'starnum': comment.starnum,
+            }
+            commentlist.append(temp)
+        data = {
+            'id': anime.id,
+            'title': anime.title,
+            'picture': anime.picture,
+            'describe': anime.describe,
+            'seasonId': anime.seasonId,
+            'mediaId': anime.mediaId,
+            'link': anime.link,
+            'isFinish': anime.isFinish,
+            'likenum': anime.likenum,
+            'islike': False,
+            'comments': commentlist,
+            'tag1': anime.tag1,
+            'tag2': anime.tag2,
+            'tag3': anime.tag3
+        }
+        return jsonify(
+            {
+                'status': 0,
+                'data': data
+            }
+        )
+    if request.method == 'POST':
+        token = request.form.get('token')
+        animeId = request.form.get('animeid')
+        if token is None:
+            return jsonify(Event1004())
+        userId = r.get(token)
+        if userId is None:
+            return  jsonify(Event1001())
+        anime = Anime.query.get(animeId)
+        if anime is None:
+            return jsonify(Event1002())
+        commentlist = []
+        for comment in anime.comments:
+            if AnimeCommentStar.query.filter_by(animeCommentId=comment.id, userId=userId).first() is not None:
+                isLike = True
+            else:
+                isLike = False
+            temp = {
+                'commentid': comment.id,
+                'username': comment.user.name,
+                'comment': comment.comment,
+                'islike': isLike,
+                # 时间
+                # 'time': comment.time
+                'starnum': comment.starnum,
+            }
+            commentlist.append(temp)
+        data = {
+            'id': anime.id,
+            'title': anime.title,
+            'picture': anime.picture,
+            'describe': anime.describe,
+            'seasonId': anime.seasonId,
+            'mediaId': anime.mediaId,
+            'link': anime.link,
+            'isFinish': anime.isFinish,
+            'likenum': anime.likenum,
+            'islike': False,
+            'comments': commentlist,
+            'tag1': anime.tag1,
+            'tag2': anime.tag2,
+            'tag3': anime.tag3
+        }
+        return jsonify(
+            {
+                'status': 0,
+                'data': data
+            }
+        )
+
+
 @anime.route('/comment', methods=['POST', 'DELETE'])
 @login_required
-def AnimeComment(token):
+def AComment(token):
     if request.method == 'POST':
         comment = request.form.get('comment')
         animeId = request.form.get('animeid')
@@ -69,8 +161,8 @@ def AnimeComment(token):
         if Anime.query.get(animeId) is None:
             return jsonify(Event1002())
         animeComment = AnimeComment(
-            comment=comment,
             userId=userId,
+            comment=comment,
             animeId=animeId
         )
         db.session.add(animeComment)
@@ -83,7 +175,8 @@ def AnimeComment(token):
         # 查询是否有这个对象
         if comment is None:
             return jsonify(Event1002())
-        elif comment.userId != userId:
+        elif comment.userId != int(userId):
+            print(comment.userId, userId)
             return jsonify(Event1005("你不是作者"))
         db.session.delete(comment)
         db.session.commit()
@@ -92,7 +185,7 @@ def AnimeComment(token):
         return jsonify(Event1004())
 
 
-@anime.route('/star', methods=['POST', 'DELETE'])
+@anime.route('/like', methods=['POST', 'DELETE'])
 @login_required
 def AnimeStar(token):
     userId = r.get(token)
@@ -126,7 +219,7 @@ def AnimeStar(token):
 
 
 
-@anime.route('/comment/star')
+@anime.route('/comment/star', methods=['POST', 'DELETE'])
 @login_required
 def ACStar(token):
     userId = r.get(token)
