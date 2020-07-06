@@ -223,7 +223,7 @@ def AnimeStar(token):
 @login_required
 def ACStar(token):
     userId = r.get(token)
-    animeCommentId = request.form.get('animecommentid')
+    animeCommentId = request.form.get('commentid')
     animecomment = AnimeComment.query.get(animeCommentId)
     if animecomment is None:
         return jsonify(Event1002())
