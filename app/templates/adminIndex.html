@@ -10,6 +10,7 @@
             border-collapse: collapse;
 
         }
+
         th, td {
             border: 1px solid black;
             padding: 10px;
@@ -20,27 +21,66 @@
 <a href="/admin/logout/{{ name }}">退出</a>
 <hr>
 <table>
-<a href="/admin/index/refreshfinishedanime/{{ name }}">更新完结动画</a>
-<thead>
+    <a href="/admin/index/refreshfinishedanime/{{ name }}">更新完结动画</a>
+    <thead>
     <tr>
         <th>封面</th>
         <th>bvid</th>
         <th>标题</th>
         <th>开始时间</th>
         <th>介绍</th>
+        <th>操作</th>
     </tr>
     </thead>
-<tbody>
-{% for data in finishedAnimeDatas %}
-<tr>
-    <td><img src="{{ data.picture }}" style="height: 80px"></td>
-    <td>{{ data.bvid }}</td>
-    <td>{{ data.title }}</td>
-    <td>{{ data.createtime }}</td>
-    <td>{{ data.introduce }}</td>
-</tr>
-{% endfor %}
-</tbody>
+    <tbody>
+    {% for data in finishedAnimeDatas %}
+        <tr>
+            <td><img src="{{ data.picture }}" style="height: 80px"></td>
+            <td>{{ data.bvid }}</td>
+            <td>{{ data.title }}</td>
+            <td>{{ data.createtime }}</td>
+            <td>{{ data.introduce }}</td>
+            <td><a href="/admin/index/deletefinishedanime/{{ name }}/{{ data.id }}">删除</a></td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <form method="POST">
+            {{ addfinishedAnimeForm.csrf_token() }}
+
+            <td>{{ addfinishedAnimeForm.picture.label }}{{ addfinishedAnimeForm.picture }}<br>
+            {% for error in addfinishedAnimeForm.picture.errors %}
+                <small style="color: red">{{ error }}</small>
+            {% endfor %}</td>
+
+            <td>{{ addfinishedAnimeForm.bvid.label }}{{ addfinishedAnimeForm.bvid }}<br>
+            {% for error in addfinishedAnimeForm.bvid.errors %}
+                <small style="color: red">{{ error }}</small>
+            {% endfor %}</td>
+
+            <td>{{ addfinishedAnimeForm.title.label }}{{ addfinishedAnimeForm.title }}<br>
+            {% for error in addfinishedAnimeForm.title.errors %}
+                <small style="color: red">{{ error }}</small>
+            {% endfor %}</td>
+
+            <td>{{ addfinishedAnimeForm.createtime.label }}{{ addfinishedAnimeForm.createtime }}<br>
+            {% for error in addfinishedAnimeForm.createtime.errors %}
+                <small style="color: red">{{ error }}</small>
+            {% endfor %}</td>
+
+            <td>{{ addfinishedAnimeForm.introduce.label }}{{ addfinishedAnimeForm.introduce }}<br>
+            {% for error in addfinishedAnimeForm.introduce.errors %}
+                <small style="color: red">{{ error }}</small>
+            {% endfor %}</td>
+
+            {% for message in get_flashed_messages() %}
+                <small style="color: red">{{ message }}</small>
+            {% endfor %}<br>
+            <td>{{ addfinishedAnimeForm.submit }}</td>
+        </form>
+    </tr>
+    </tbody>
 </table>
+<hr>
+<form action=""></form>
 </body>
 </html>
