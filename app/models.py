@@ -71,7 +71,6 @@ class Drama(db.Model):
     __tablename__ = "drama"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20))  # 标题
-    animetitle = db.Column(db.String(20))
     content = db.Column(db.Text)  # 内容
     time = db.Column(db.DateTime, default=datetime.utcnow, index=True)  # 时间
     likes = db.relationship('Likedrama', back_populates='drama')  # 点赞

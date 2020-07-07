@@ -84,22 +84,23 @@ def recomment(token):
         tag2 = request.form.get('tag2')
         tag3 = request.form.get('tag3')
         if int(datafrom) == 1:
-            drama = Drama(title=title, content=content, user_id=user_id, animetitle=animetitle)
+            drama = Drama(title=title, content=content, user_id=user_id)
             db.session.add(drama)
             db.session.commit()
-            anime = Anime(describe=describe,datafrom=datafrom,seasonId=seasonid,dramaid=drama.id,tag1=tag1,tag2=tag2,tag3=tag3)
+            anime = Anime(title=animetitle,describe=describe,datafrom=datafrom,seasonId=seasonid,dramaid=drama.id,tag1=tag1,tag2=tag2,tag3=tag3)
             db.session.add(anime)
         elif int(datafrom) == 2:
-            drama = Drama(title=title, content=content, user_id=user_id, animetitle=animetitle)
+            drama = Drama(title=title, content=content, user_id=user_id)
             db.session.add(drama)
             db.session.commit()
-            anime = Anime(describe=describe, link=link,datafrom=datafrom, dramaid=drama.id,tag1=tag1,tag2=tag2,tag3=tag3)
+            anime = Anime(title=animetitle,describe=describe, link=link,datafrom=datafrom, dramaid=drama.id,tag1=tag1,tag2=tag2,tag3=tag3)
             db.session.add(anime)
         db.session.commit()
         for file in animepicture:
             file.filename = random_filename(file.filename)
             coverp = Photo(image= 'http://127.0.0.1:5000/user/image/' + file.filename, drama_id=drama.id, cover=True)
             file.save(os.path.join(current_app.config['UPLOAD_PATH'], file.filename))
+            anime.photo = coverp.image
             db.session.add(coverp)
         for file in photo:
             file.filename = random_filename(file.filename)

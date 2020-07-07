@@ -84,10 +84,10 @@ def Giveuser(user):
 def Givedrama(drama):
     photos = Photo.query.filter_by(drama_id=drama.id,content=True).all()
     animepictures = Photo.query.filter_by(drama_id=drama.id,cover=True).all()
-    if drama.animefrom == 1:
-        animelink = drama.animeseasonid
+    if drama.anime[0].datafrom == 1:
+        animelink = drama.anime[0].seasonId
     else:
-        animelink = drama.animelink
+        animelink = drama.anime[0].link
 
     return {
             "dramaid": drama.id,
@@ -97,11 +97,12 @@ def Givedrama(drama):
             "content": drama.content,
             "time": drama.time,
             "photos": [photo.image for photo in photos],
-            "animetitle": drama.animetitle,
-            "animedescribe": drama.animedescribe,
+            "animetitle": drama.anime[0].title,
+            "animedescribe": drama.anime[0].describe,
             "animepicture": [photo.image for photo in animepictures],
-            "animefrom": drama.animefrom,
+            "animefrom": drama.anime[0].datafrom,
             "animelink": animelink,
+            "tag": [ [{"tag1":anime.tag1},{"tag2":anime.tag2},{"tag3":anime.tag3}] for anime in drama.anime],
             "comment": [Givecomment(comment) for comment in drama.comments]
         }
 
