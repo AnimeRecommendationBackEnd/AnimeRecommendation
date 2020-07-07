@@ -1,6 +1,6 @@
 
 from app.User import user,jsonify,request,current_app,random_filename,db,os,send_email,login_required,method_verify
-from app.User import User,Drama,Photo,Comment,Likedrama,Collectdrama,r,Follow
+from app.User import User,Drama,Photo,Comment,Likedrama,Collectdrama,r,Follow,Anime
 from app.User import Event0,Event1001,Event1002,Event1003,Event1004,Event1005
 
 @user.route('/follows',methods=['POST','DELETE'])
@@ -59,7 +59,7 @@ def create():
             db.session.commit()
             send_email('注册成功',user.email,'注册成功欢迎加入我们')
             token = user.make_token()
-            r.set(token,str(user.id),ex=3600)
+            r.set(token,str(user.id))
             return jsonify(Event0(token=token))
         return jsonify(Event1005('密码不一致'))
     return jsonify(Event1004())
@@ -76,20 +76,25 @@ def recomment(token):
         photo = request.files.getlist('photo')
         animetitle = request.form.get('animetitle')
         user_id = r.get(token)
-        animedescribe = request.form.get('animedescribe')
-        animefrom = request.form.get('animefrom')
-        animelink = request.form.get('animelink')
-        animeseasonid = request.form.get('animeseasonid')
-        if int(animefrom) == 1:
-            drama = Drama(title=title, content=content, user_id=user_id, animetitle=animetitle,
-                          animedescribe=animedescribe,
-                          animefrom=animefrom,animeseasonid=animeseasonid)
+        describe = request.form.get('describe')
+        datafrom = request.form.get('datafrom')
+        link = request.form.get('link')
+        seasonid = request.form.get('seasonid')
+        tag1 = request.form.get('tag1')
+        tag2 = request.form.get('tag2')
+        tag3 = request.form.get('tag3')
+        if int(datafrom) == 1:
+            drama = Drama(title=title, content=content, user_id=user_id, animetitle=animetitle)
             db.session.add(drama)
-        elif int(animefrom) == 2:
-            drama = Drama(title=title, content=content, user_id=user_id, animetitle=animetitle,
-                          animedescribe=animedescribe,
-                          animefrom=animefrom, animelink=animelink)
+            db.session.commit()
+            anime = Anime(describe=describe,datafrom=datafrom,seasonId=seasonid,dramaid=drama.id,tag1=tag1,tag2=tag2,tag3=tag3)
+            db.session.add(anime)
+        elif int(datafrom) == 2:
+            drama = Drama(title=title, content=content, user_id=user_id, animetitle=animetitle)
             db.session.add(drama)
+            db.session.commit()
+            anime = Anime(describe=describe, link=link,datafrom=datafrom, dramaid=drama.id,tag1=tag1,tag2=tag2,tag3=tag3)
+            db.session.add(anime)
         db.session.commit()
         for file in animepicture:
             file.filename = random_filename(file.filename)

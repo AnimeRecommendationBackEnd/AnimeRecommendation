@@ -65,10 +65,13 @@ url = {
         'title':'true',
         'content':'true',
         'animetitle':'true',
-        'animedescribe':'true',
-        'animefrom':'false',
-        'animelink':'false',
-        'animeseasonid':'false'
+        'describe':'true',
+        'datafrom':'false',
+        'link':'false',
+        'seasonid':'false',
+        'tag1':'false',
+        'tag2':'false',
+        'tag3':'false'
         },
         'DELETE':{
         'token':'true',

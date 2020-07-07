@@ -81,11 +81,7 @@ class Drama(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', back_populates='dramas')  # 发布人
     top = db.Column(db.Integer)  # 置顶的评论id
-    anime = db.Column(db.Integer)
-    animedescribe = db.Column(db.Text)
-    animefrom = db.Column(db.Integer)
-    animelink = db.Column(db.String(30))
-    animeseasonid = db.Column(db.String(20))
+    anime = db.relationship('Anime',back_populates='drama')
     solution = db.Column(db.String(10), default=None)  # 问番的解决状态
 
 
@@ -135,6 +131,8 @@ class Anime(db.Model):
     comments = db.relationship('AnimeComment', backref='anime')
     likes = db.relationship('AnimeLike', backref='anime')
     likenum = db.Column(db.Integer, default=0)
+    dramaid = db.Column(db.Integer,db.ForeignKey('drama.id'))
+    drama = db.relationship('Drama',back_populates='anime')
 
 
 class AnimeComment(db.Model):
