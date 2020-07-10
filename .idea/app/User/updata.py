@@ -4,7 +4,7 @@ from app.User import Event0,Event1001,Event1002,Event1003,Event1004,Event1005
 
 
 #login_required为登录验证装饰器，在extensions.py文件中
-@user.route('/updata',methods=['PUT'])
+@user.route('/updata',methods=['POST'])
 @login_required
 def updata(token):
     name = request.form.get('name')

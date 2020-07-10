@@ -36,6 +36,7 @@ def register_command(app):
         db.drop_all()
         db.create_all()
         whooshee.reindex()
+        r.flushall()
         click.echo('create success')
 
 

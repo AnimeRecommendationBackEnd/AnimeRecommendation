@@ -1,6 +1,10 @@
 
 from app.User import user,jsonify,request,current_app,random_filename,db,os,send_email,login_required,method_verify
+<<<<<<< HEAD
 from app.User import User,Drama,Photo,Comment,Likedrama,Collectdrama,r,Anime,Follow
+=======
+from app.User import User,Drama,Photo,Comment,Likedrama,Collectdrama,r,Follow,Anime
+>>>>>>> dc533f85b3a6914c75420e11b2e10f0f27f58a1e
 from app.User import Event0,Event1001,Event1002,Event1003,Event1004,Event1005
 
 @user.route('/follows',methods=['POST','DELETE'])

@@ -4,7 +4,7 @@ from app.Admin import admin
 from app.Admin.login import adminLoginConfirm
 from app.models import *
 from app.Admin.form import *
-from app.Admin.AnimeDatas import Animedatas
+#from app.Admin.AnimeDatas import Animedatas
 
 
 @admin.route('/index/<name>')
