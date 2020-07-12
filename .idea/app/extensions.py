@@ -74,20 +74,35 @@ def Giveuser(user):
         "name": user.name,
         "avatar": user.avatar,
         "email": user.email,
+<<<<<<< HEAD
         "Rdramas": [{"dramaid":drama.id} for drama in Rdramas],
         "Adramas": [{"dramaid":drama.id} for drama in Adramas],
         "collects": [{"dramaid":drama.id} for drama in user.collects],
         "follows": [{"followid":follow.id,"followname":follow.name} for follow in user.follows]
+=======
+        "Rdramas": len(Rdramas),
+        "Adramas": len(Adramas),
+        "collects": len(user.collects),
+        "fans": len(user.followed.all()),
+        'followers':len(user.follower.all())
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
     }
 
 
 def Givedrama(drama):
     photos = Photo.query.filter_by(drama_id=drama.id,content=True).all()
     animepictures = Photo.query.filter_by(drama_id=drama.id,cover=True).all()
+<<<<<<< HEAD
     if drama.animefrom == 1:
         animelink = drama.animeseasonid
     else:
         animelink = drama.animelink
+=======
+    if drama.anime[0].datafrom == 1:
+        animelink = drama.anime[0].seasonId
+    else:
+        animelink = drama.anime[0].link
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
 
     return {
             "dramaid": drama.id,
@@ -97,11 +112,20 @@ def Givedrama(drama):
             "content": drama.content,
             "time": drama.time,
             "photos": [photo.image for photo in photos],
+<<<<<<< HEAD
             "animetitle": drama.animetitle,
             "animedescribe": drama.animedescribe,
             "animepicture": [photo.image for photo in animepictures],
             "animefrom": drama.animefrom,
             "animelink": animelink,
+=======
+            "animetitle": drama.anime[0].title,
+            "animedescribe": drama.anime[0].describe,
+            "animepicture": [photo.image for photo in animepictures],
+            "animefrom": drama.anime[0].datafrom,
+            "animelink": animelink,
+            "tag": [ [{"tag1":anime.tag1},{"tag2":anime.tag2},{"tag3":anime.tag3}] for anime in drama.anime],
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
             "comment": [Givecomment(comment) for comment in drama.comments]
         }
 
@@ -126,3 +150,33 @@ def Giveask(drama):
         "photos": [photo.image for photo in photos],
         "comment": [Givecomment(comment) for comment in drama.comments]
     }
+<<<<<<< HEAD
+=======
+
+def Giveperson(user):
+    return {
+        'userid':user.id,
+        'name':user.name,
+        'avatar':user.avatar,
+        'email':user.email,
+        "fans": len(user.followed.all()),
+        'followers': len(user.follower.all())
+    }
+
+
+def Givep_recommentd(drama):
+    photos = Photo.query.filter_by(drama_id=drama.id, cover=True).all()
+    return {
+        'dramaid': drama.id,
+        'title': drama.title,
+        'photo': [photo.image for photo in photos]
+    }
+
+def Givep_ask(drama):
+    photos = Photo.query.filter_by(drama_id=drama.id, content=True).all()
+    return {
+        'dramaid': drama.id,
+        'title': drama.title,
+        'photo': [photo.image for photo in photos]
+    }
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d

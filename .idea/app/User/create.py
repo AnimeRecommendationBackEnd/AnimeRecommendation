@@ -1,6 +1,10 @@
 
 from app.User import user,jsonify,request,current_app,random_filename,db,os,send_email,login_required,method_verify
+<<<<<<< HEAD
 from app.User import User,Drama,Photo,Comment,Likedrama,Collectdrama,r,Follow
+=======
+from app.User import User,Drama,Photo,Comment,Likedrama,Collectdrama,r,Anime,Follow
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
 from app.User import Event0,Event1001,Event1002,Event1003,Event1004,Event1005
 
 @user.route('/follows',methods=['POST','DELETE'])
@@ -8,17 +12,27 @@ from app.User import Event0,Event1001,Event1002,Event1003,Event1004,Event1005
 def follows(token):
     if request.method == 'POST':
         userid = request.form.get('userid')
+<<<<<<< HEAD
         user = User.query.get(userid)
         if user is None:
             return jsonify(Event1002())
         if Follow.query.filter_by(userid=r.get(token), followid=userid).first() is not None:
             return jsonify(Event1005('已关注该用户'))
         follow = Follow(followid=userid, name=user.name, userid=r.get(token))
+=======
+        user = User.query.get(r.get(token))
+        if User.query.get(userid) is None:
+            return jsonify(Event1002())
+        if user.followed.filter_by(followedid=userid).first() is not None:
+            return jsonify(Event1005('你已关注该用户'))
+        follow = Follow(followerid=r.get(token),followedid=userid)
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
         db.session.add(follow)
         db.session.commit()
         return jsonify(Event0(token=token))
     elif request.method == 'DELETE':
         followid = request.form.get('userid')
+<<<<<<< HEAD
         if User.query.get(followid) is None:
             return jsonify(Event1005('该用户不存在'))
         if Follow.query.filter_by(userid=r.get(token), followid=followid).first() is None:
@@ -27,6 +41,17 @@ def follows(token):
         db.session.delete(follow)
         db.session.commit()
         if Follow.query.filter_by(userid=r.get(token), followid=followid).first() is not None:
+=======
+        user = User.query.get(r.get(token))
+        if User.query.get(followid) is None:
+            return jsonify(Event1005('该用户不存在'))
+        if user.followed.filter_by(followedid=followid).first() is None:
+            return jsonify(Event1005('未关注该用户'))
+        follow = user.followed.filter_by(followedid=followid).first()
+        db.session.delete(follow)
+        db.session.commit()
+        if user.followed.filter_by(followedid=followid).first() is not None:
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
             return jsonify(Event1005('删除失败'))
         return jsonify(Event0(token=token))
 
@@ -59,7 +84,11 @@ def create():
             db.session.commit()
             send_email('注册成功',user.email,'注册成功欢迎加入我们')
             token = user.make_token()
+<<<<<<< HEAD
             r.set(token,str(user.id),ex=3600)
+=======
+            r.set(token,str(user.id))
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
             return jsonify(Event0(token=token))
         return jsonify(Event1005('密码不一致'))
     return jsonify(Event1004())
@@ -76,6 +105,7 @@ def recomment(token):
         photo = request.files.getlist('photo')
         animetitle = request.form.get('animetitle')
         user_id = r.get(token)
+<<<<<<< HEAD
         animedescribe = request.form.get('animedescribe')
         animefrom = request.form.get('animefrom')
         animelink = request.form.get('animelink')
@@ -90,11 +120,36 @@ def recomment(token):
                           animedescribe=animedescribe,
                           animefrom=animefrom, animelink=animelink)
             db.session.add(drama)
+=======
+        describe = request.form.get('describe')
+        datafrom = request.form.get('datafrom')
+        link = request.form.get('link')
+        seasonid = request.form.get('seasonid')
+        tag1 = request.form.get('tag1')
+        tag2 = request.form.get('tag2')
+        tag3 = request.form.get('tag3')
+        if int(datafrom) == 1:
+            drama = Drama(title=title, content=content, user_id=user_id)
+            db.session.add(drama)
+            db.session.commit()
+            anime = Anime(title=animetitle,describe=describe,datafrom=datafrom,seasonId=seasonid,dramaid=drama.id,tag1=tag1,tag2=tag2,tag3=tag3)
+            db.session.add(anime)
+        elif int(datafrom) == 2:
+            drama = Drama(title=title, content=content, user_id=user_id)
+            db.session.add(drama)
+            db.session.commit()
+            anime = Anime(title=animetitle,describe=describe, link=link,datafrom=datafrom, dramaid=drama.id,tag1=tag1,tag2=tag2,tag3=tag3)
+            db.session.add(anime)
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
         db.session.commit()
         for file in animepicture:
             file.filename = random_filename(file.filename)
             coverp = Photo(image= 'http://127.0.0.1:5000/user/image/' + file.filename, drama_id=drama.id, cover=True)
             file.save(os.path.join(current_app.config['UPLOAD_PATH'], file.filename))
+<<<<<<< HEAD
+=======
+            anime.photo = coverp.image
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
             db.session.add(coverp)
         for file in photo:
             file.filename = random_filename(file.filename)
@@ -102,9 +157,15 @@ def recomment(token):
             file.save(os.path.join(current_app.config['UPLOAD_PATH'], file.filename))
             db.session.add(contentp)
         db.session.commit()
+<<<<<<< HEAD
         follows = Follow.query.filter(Follow.followid==user_id).all()
         for follow in follows:
             send_email('你关注的用户更新啦',follow.user.email,follow.user.name+'——'+'['+title+']'+'(推荐番)')
+=======
+        user = User.query.get(r.get(token))
+        for follow in user.followed.all():
+            send_email('你关注的用户更新啦',follow.followed.email,follow.followed.name+'——'+'['+title+']'+'(推荐番)')
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
         return jsonify(Event0(token=token, dramaid=drama.id))
     elif request.method == 'DELETE':
         dramaid = request.form.get('dramaid')
@@ -242,9 +303,15 @@ def ask(token):
             file.save(os.path.join(current_app.config['UPLOAD_PATH'], file.filename))
             db.session.add(contentp)
         db.session.commit()
+<<<<<<< HEAD
         follows = Follow.query.filter(Follow.followid == userid).all()
         for follow in follows:
             send_email('你关注的用户更新啦', follow.user.email, follow.user.name + '——' +'['+title+']'+'(问番)')
+=======
+        user = User.query.get(r.get(token))
+        for follow in user.followed.all():
+            send_email('你关注的用户更新啦', follow.followed.email, follow.followed.name + '——' + '[' + title + ']' + '(推荐番)')
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
         return jsonify(Event0(token=token, dramaid=drama.id))
     if request.method == 'DELETE':
         dramaid = request.form.get('dramaid')

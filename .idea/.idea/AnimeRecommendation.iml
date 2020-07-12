@@ -2,7 +2,11 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
+<<<<<<< HEAD
     <orderEntry type="jdk" jdkName="Python 3.7 (untitled) (3)" jdkType="Python SDK" />
+=======
+    <orderEntry type="jdk" jdkName="Python 3.6 (办公)" jdkType="Python SDK" />
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

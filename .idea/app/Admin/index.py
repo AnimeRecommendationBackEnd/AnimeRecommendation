@@ -4,7 +4,11 @@ from app.Admin import admin
 from app.Admin.login import adminLoginConfirm
 from app.models import *
 from app.Admin.form import *
+<<<<<<< HEAD
 from app.Admin.AnimeDatas import Animedatas
+=======
+#from app.Admin.AnimeDatas import Animedatas
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
 
 
 @admin.route('/index/<name>')

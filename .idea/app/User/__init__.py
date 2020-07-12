@@ -65,10 +65,20 @@ url = {
         'title':'true',
         'content':'true',
         'animetitle':'true',
+<<<<<<< HEAD
         'animedescribe':'true',
         'animefrom':'false',
         'animelink':'false',
         'animeseasonid':'false'
+=======
+        'describe':'true',
+        'datafrom':'false',
+        'link':'false',
+        'seasonid':'false',
+        'tag1':'false',
+        'tag2':'false',
+        'tag3':'false'
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
         },
         'DELETE':{
         'token':'true',
@@ -142,6 +152,38 @@ url = {
             'dramaid': 'false',
             'ask': 'false'
         }
+<<<<<<< HEAD
+=======
+    },
+    '/user/person':{
+        'GET':{
+            'token':'true'
+        }
+    },
+    '/user/person/fans':{
+        'GET':{
+            'token':'true',
+            'userid':'false'
+        }
+    },
+    '/user/person/follower': {
+        'GET': {
+            'token': 'true',
+            'userid':'false'
+        }
+    },
+    '/user/person/recommend': {
+        'GET': {
+            'token': 'true',
+            'userid':'false'
+        }
+    },
+    '/user/person/ask': {
+        'GET': {
+            'token': 'true',
+            'userid':'false'
+        }
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
     }
 }
 

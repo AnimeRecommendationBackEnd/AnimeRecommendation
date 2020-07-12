@@ -1,8 +1,11 @@
 from app.User import user,request,jsonify,User,login_required,r
 from app.User import Event0,Event1001,Event1002,Event1003,Event1004,Event1005
 
+<<<<<<< HEAD
 #过期时间
 EX_TIME = 3600
+=======
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
 
 
 #登录URL
@@ -13,7 +16,11 @@ def login():
     user = User.query.filter_by(name=name,password=password).first()
     if user is not None:
         token = user.make_token()       #加密
+<<<<<<< HEAD
         r.set(token,str(user.id),ex=EX_TIME)
+=======
+        r.set(token,str(user.id))
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
         return jsonify(Event0(token=token))
     return jsonify(Event1002())
 

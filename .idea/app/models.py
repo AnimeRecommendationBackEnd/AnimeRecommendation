@@ -7,17 +7,39 @@ from app.extensions import db,whooshee
 
 # cascade='all'为当前表删除时，有cascade='all'的外键表也一同删除
 
+<<<<<<< HEAD
+=======
+class Follow(db.Model):
+    __tablename__ = "follow"
+    followerid = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    followedid = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
 # users数据表,用户名以及邮箱唯一
 @whooshee.register_model('name')
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
+<<<<<<< HEAD
+=======
+    followed = db.relationship('Follow',foreign_keys=[Follow.followerid],
+                               backref=db.backref('follower',lazy='joined'),        #粉丝
+                               lazy='dynamic',
+                               cascade='all, delete-orphan')
+    follower = db.relationship('Follow',foreign_keys=[Follow.followedid],
+                                backref=db.backref('followed',lazy='joined'),           #关注
+                                lazy='dynamic',
+                                cascade='all, delete-orphan')
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
     name = db.Column(db.String(20), unique=True)
     password = db.Column(db.String(20))
     avatar = db.Column(db.String(100))
     email = db.Column(db.String(20), unique=True)
     dramas = db.relationship('Drama', back_populates='user', cascade='all')
+<<<<<<< HEAD
     follows = db.relationship('Follow', back_populates='user')
+=======
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
     likes = db.relationship('Likedrama', back_populates='user', cascade='all')  # 点赞
     collects = db.relationship('Collectdrama', back_populates='user', cascade='all')  # 收藏
     animecomments = db.relationship('AnimeComment', backref='user')
@@ -29,6 +51,7 @@ class User(db.Model):
         return pwd_context.encrypt(self.name)
 
 
+<<<<<<< HEAD
 class Follow(db.Model):
     __tablename__ = "follow"
     id = db.Column(db.Integer, primary_key=True)
@@ -36,6 +59,8 @@ class Follow(db.Model):
     name = db.Column(db.String(20))
     userid = db.Column(db.Integer,db.ForeignKey('user.id'))
     user = db.relationship('User', back_populates='follows')
+=======
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
 
 # 点赞表
 class Likedrama(db.Model):
@@ -71,7 +96,10 @@ class Drama(db.Model):
     __tablename__ = "drama"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20))  # 标题
+<<<<<<< HEAD
     animetitle = db.Column(db.String(20))
+=======
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
     content = db.Column(db.Text)  # 内容
     time = db.Column(db.DateTime, default=datetime.utcnow, index=True)  # 时间
     likes = db.relationship('Likedrama', back_populates='drama')  # 点赞
@@ -81,11 +109,15 @@ class Drama(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', back_populates='dramas')  # 发布人
     top = db.Column(db.Integer)  # 置顶的评论id
+<<<<<<< HEAD
     anime = db.Column(db.Integer)
     animedescribe = db.Column(db.Text)
     animefrom = db.Column(db.Integer)
     animelink = db.Column(db.String(30))
     animeseasonid = db.Column(db.String(20))
+=======
+    anime = db.relationship('Anime',back_populates='drama')
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
     solution = db.Column(db.String(10), default=None)  # 问番的解决状态
 
 
@@ -135,6 +167,11 @@ class Anime(db.Model):
     comments = db.relationship('AnimeComment', backref='anime')
     likes = db.relationship('AnimeLike', backref='anime')
     likenum = db.Column(db.Integer, default=0)
+<<<<<<< HEAD
+=======
+    dramaid = db.Column(db.Integer,db.ForeignKey('drama.id'))
+    drama = db.relationship('Drama',back_populates='anime')
+>>>>>>> f4eceed929deec1ee461d6d1cb9a0c52d7f8b35d
 
 
 class AnimeComment(db.Model):
