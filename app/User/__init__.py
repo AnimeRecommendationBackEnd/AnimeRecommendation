@@ -174,6 +174,9 @@ url = {
             'token': 'true',
             'userid':'false'
         }
+    },
+    '/user/image/<path:filename>':{
+        'GET':{}
     }
 }
 

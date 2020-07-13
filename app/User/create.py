@@ -13,7 +13,7 @@ def follows(token):
             return jsonify(Event1002())
         if user.followed.filter_by(followedid=userid).first() is not None:
             return jsonify(Event1005('你已关注该用户'))
-        follow = Follow(followerid=r.get(token),followedid=userid)
+        follow = Follow(followerid=userid,followedid=r.get(token))
         db.session.add(follow)
         db.session.commit()
         return jsonify(Event0(token=token))
@@ -56,7 +56,7 @@ def create():
             if avatar and avatar.filename != '':
                 avatar.filename = random_filename(avatar.filename)
                 avatar.save(os.path.join(current_app.config['UPLOAD_PATH'], avatar.filename))
-                user.avatar = 'http://127.0.0.1:5000/user/image/' + avatar.filename
+                user.avatar = 'http://101.200.157.252/user/image/' + avatar.filename
             db.session.commit()
             send_email('注册成功',user.email,'注册成功欢迎加入我们')
             token = user.make_token()
@@ -99,13 +99,13 @@ def recomment(token):
         db.session.commit()
         for file in animepicture:
             file.filename = random_filename(file.filename)
-            coverp = Photo(image= 'http://127.0.0.1:5000/user/image/' + file.filename, drama_id=drama.id, cover=True)
+            coverp = Photo(image= 'http://101.200.157.252/user/image/' + file.filename, drama_id=drama.id, cover=True)
             file.save(os.path.join(current_app.config['UPLOAD_PATH'], file.filename))
             anime.photo = coverp.image
             db.session.add(coverp)
         for file in photo:
             file.filename = random_filename(file.filename)
-            contentp = Photo(image='http://127.0.0.1:5000/user/image/' + file.filename, drama_id=drama.id, content=True)
+            contentp = Photo(image='http://101.200.157.252/user/image/' + file.filename, drama_id=drama.id, content=True)
             file.save(os.path.join(current_app.config['UPLOAD_PATH'], file.filename))
             db.session.add(contentp)
         db.session.commit()
@@ -244,7 +244,7 @@ def ask(token):
         db.session.commit()
         for file in photos:
             file.filename = random_filename(file.filename)
-            contentp = Photo(image='http://127.0.0.1:5000/user/image/' + file.filename, drama_id=drama.id, content=True)
+            contentp = Photo(image='http://101.200.157.252/user/image/' + file.filename, drama_id=drama.id, content=True)
             file.save(os.path.join(current_app.config['UPLOAD_PATH'], file.filename))
             db.session.add(contentp)
         db.session.commit()

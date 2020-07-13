@@ -18,11 +18,15 @@ UPLOAD_PATH = os.path.join(os.path.join(os.path.dirname(__file__),'uploads'))
 #邮箱发信服务器
 MAIL_SERVER = 'smtp.qq.com'
 
-#邮箱发信端口
+MAIL_USE_TLS = False
+MAIL_USE_SSL = True
+MAIL_PORT = 465
+
+'''#邮箱发信端口
 MAIL_POST = 587
 
 #邮箱使用SSL/TLS
-MAIL_USE_TLS = True
+MAIL_USE_TLS = True'''
 
 #邮箱地址
 MAIL_USERNAME = '1193299044@qq.com'

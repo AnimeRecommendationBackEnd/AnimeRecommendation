@@ -19,7 +19,7 @@ def updata(token):
     if avatar is not None:
         avatar.filename = random_filename('user' + str(user.id) + os.path.splitext(avatar.filename)[1])
         avatar.save(os.path.join(current_app.config['UPLOAD_PATH'], avatar.filename))
-        user.avatar = 'http://127.0.0.1:5000/user/image/' + avatar.filename
+        user.avatar = 'http://101.200.157.252/user/image/' + avatar.filename
     if password is not None:
         user.password = password
     if email is not None:
