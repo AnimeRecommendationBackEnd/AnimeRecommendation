@@ -1,40 +1,31 @@
 from app.Admin import admin
-from app.Admin.form import *
-from flask import flash, session, redirect, url_for, render_template, request
+from app.extensions import *
 from app.models import *
 
-def adminLoginConfirm(username):
-    if session.get("username") != username:
-        return redirect(url_for("admin.adminLogin", next=request.url))
 
-
-@admin.route('/login', methods=['GET', 'POST'])
+@admin.route('/login', methods=['POST'])
 def adminLogin():
-    form = adminLoginForm()
-    if form.validate_on_submit():
-        name = form.name.data
-        password = form.password.data
+    name = request.form.get('name')
+    password = request.form.get('password')
 
-        admin = Admin.query.filter_by(name=name)
-        if admin.count() == 0:
-            flash('用户不存在')
-
-        else:
-            # print(admin.first().checkPassword(password))
-            if admin.first().checkPassword(password):
-                session['username'] = name
-                return redirect(url_for('admin.adminIndex', name=name))
-            else:
-                flash('密码错误')
-
-    return render_template('adminLogin.html', form=form)
-
-@admin.route('/logout/<name>', methods=['GET'])
-def adminLogout(name):
-    # 身份验证
-    adminLoginConfirm(name)
-    session.pop('username')
-    return redirect(url_for('admin.adminLogin'))
+    admin = Admin.query.filter_by(name=name).first()
+    if admin is None:
+        return Event1002()
+    token = admin.makeToken()
+    r.set(token, str(admin.id))
+    if admin.checkPwd(password):
+        return jsonify(Event0(token=token))
+    else:
+        return jsonify(Event1002())
 
 
-
+@admin.route('/logout', methods=['POST'])
+@login_required
+def adminLogout(token):
+    if r.get(token) is None:
+        return jsonify(Event1001())  # token无效
+    try:
+        r.delete(token)
+        return jsonify(Event0())
+    except:
+        return jsonify(Event1005('token未成功删除'))

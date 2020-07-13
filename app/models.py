@@ -4,6 +4,8 @@ from passlib.apps import custom_app_context as pwd_context
 
 from app.extensions import db,whooshee
 
+import hashlib
+
 
 # cascade='all'为当前表删除时，有cascade='all'的外键表也一同删除
 
@@ -68,6 +70,19 @@ class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     password = db.Column(db.String(20))
+
+    def checkPwd(self, password):
+        if self.password == password:
+            return True
+        else:
+            return False
+
+    def makeToken(self):
+        md5 = hashlib.md5()
+        temp = self.name + str(datetime.now().timestamp())
+        md5.update(temp.encode('utf8'))
+        token = md5.hexdigest()
+        return token
 
 
 # 推荐表（问番表）
