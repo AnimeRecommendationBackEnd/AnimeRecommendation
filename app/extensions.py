@@ -23,6 +23,16 @@ def login_required(func):
     return yes_or_no
 
 
+def admin_login(func):
+    @wraps(func)
+    def yes_or_no():
+        token = request.form.get('token')
+        if r.get(token) is None:
+            return jsonify(Event1001())
+        return func(token)
+    return yes_or_no
+
+
 #发送邮件函数
 def send_email(subject,to,body):
     message = Message(subject=subject,recipients=[to],body=body)

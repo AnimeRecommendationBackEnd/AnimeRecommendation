@@ -20,7 +20,7 @@ def adminLogin():
 
 
 @admin.route('/logout', methods=['POST'])
-@login_required
+@admin_login
 def adminLogout(token):
     if r.get(token) is None:
         return jsonify(Event1001())  # token无效
