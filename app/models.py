@@ -34,9 +34,9 @@ class User(db.Model):
     dramas = db.relationship('Drama', back_populates='user', cascade='all')
     likes = db.relationship('Likedrama', back_populates='user', cascade='all')  # 点赞
     collects = db.relationship('Collectdrama', back_populates='user', cascade='all')  # 收藏
-    animecomments = db.relationship('AnimeComment', backref='user')
-    animelikes = db.relationship('AnimeLike', backref='user')
-    animecommentstars = db.relationship('AnimeCommentStar', backref='user')
+    animecomments = db.relationship('AnimeComment', backref='user', cascade='all')
+    animelikes = db.relationship('AnimeLike', backref='user', cascade='all')
+    animecommentstars = db.relationship('AnimeCommentStar', backref='user', cascade='all')
 
     # 以用户名进行加密
     def make_token(self):
@@ -147,8 +147,8 @@ class Anime(db.Model):
     # 1：bilibili
     # 2：用户推荐
     datafrom = db.Column(db.Integer)
-    comments = db.relationship('AnimeComment', backref='anime')
-    likes = db.relationship('AnimeLike', backref='anime')
+    comments = db.relationship('AnimeComment', backref='anime', cascade='all')
+    likes = db.relationship('AnimeLike', backref='anime', cascade='all')
     likenum = db.Column(db.Integer, default=0)
     dramaid = db.Column(db.Integer,db.ForeignKey('drama.id'))
     drama = db.relationship('Drama',back_populates='anime')
@@ -161,7 +161,7 @@ class AnimeComment(db.Model):
     animeId = db.Column(db.Integer, db.ForeignKey('anime.id'))
     comment = db.Column(db.TEXT)
     # time = db.Column(db.DateTime, default=datetime.utcnow)
-    stars = db.relationship("AnimeCommentStar", backref='animecomment')
+    stars = db.relationship("AnimeCommentStar", backref='animecomment', cascade='all')
     starnum = db.Column(db.Integer, default=0)
 
 
