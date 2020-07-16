@@ -50,7 +50,8 @@ def getAllAnime(token):
 
 
 # 对单个anime的查删改
-@admin.route('/operateanime', methods=['POST', 'DELETE', 'PUT'])
+@admin.route('/operateanime', methods=['GET', 'POST', 'DELETE', 'PUT'])
+@login_required
 def operateAnime(token):
     adminId = r.get(token)
     animeId = int(request.form.get('animeid'))
@@ -58,6 +59,42 @@ def operateAnime(token):
         anime = Anime.query.get(animeId)
     else:
         return jsonify(Event1004())
+    # 获取到单个anime
+    if request.method == 'GET':
+        commentlist = []
+        for comment in anime.comments:
+            temp = {
+                'commentid': comment.id,
+                'username': comment.user.name,
+                'comment': comment.comment,
+                # 时间
+                # 'time': comment.time
+                'starnum': comment.starnum,
+            }
+            commentlist.append(temp)
+        data = {
+            'id': anime.id,
+            'title': anime.title,
+            'picture': anime.picture,
+            'describe': anime.describe,
+            'seasonId': anime.seasonId,
+            'mediaId': anime.mediaId,
+            'link': anime.link,
+            'isFinish': anime.isFinish,
+            'likenum': anime.likenum,
+            'islike': False,
+            'comments': commentlist,
+            'tag1': anime.tag1,
+            'tag2': anime.tag2,
+            'tag3': anime.tag3
+        }
+        return jsonify(
+            {
+                "status": 0,
+                "data": data
+            }
+        )
+        pass
     # 手动增加一个anime
     if request.method == 'POST':
         anime.seasonId = isIn('seasonid', anime.seasonId)
@@ -122,6 +159,33 @@ def addAnime(token):
             return jsonify(Event0(token=token))
         else:
             return jsonify(Event1005("已经设为不展示了"))
+
+
+@admin.route('/animecomment', methods=['POST', 'DELETE'])
+@login_required
+def animeComment(token):
+    commentId = request.form.get('commentid')
+    comment = AnimeComment.query.get(commentId)
+    if comment is None:
+        return jsonify(Event1004())
+    if request.method == 'POST':
+        return jsonify(
+            {
+                "status": 0,
+                "data": {
+                    "userid": comment.user.id,
+                    "username": comment.user.name,
+                    "text": comment.text,
+                    "time": comment.time,
+                    "starnum": comment.starnum
+                }
+            }
+        )
+    elif request.method == 'DELETE':
+        db.session.delete(comment)
+        db.session.commit()
+        return jsonify(Event0(token=token))
+
 
 
 # 刷新完结动画推荐
