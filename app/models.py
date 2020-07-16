@@ -37,6 +37,10 @@ class User(db.Model):
     animecomments = db.relationship('AnimeComment', backref='user', cascade='all')
     animelikes = db.relationship('AnimeLike', backref='user', cascade='all')
     animecommentstars = db.relationship('AnimeCommentStar', backref='user', cascade='all')
+    # 判断用户状态
+    # True为正常
+    # False为被封号
+    status = db.Column(db.Boolean, default=True)
 
     # 以用户名进行加密
     def make_token(self):
