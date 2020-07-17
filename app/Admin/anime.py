@@ -1,5 +1,5 @@
 from app.Admin import admin
-#from app.Admin.AnimeDatas import Animedatas
+from app.Admin.AnimeDatas import Animedatas
 from app.extensions import *
 from app.models import *
 from sqlalchemy import or_
