@@ -10,6 +10,8 @@ def login():
     password = request.form.get('password')
     user = User.query.filter_by(name=name,password=password).first()
     if user is not None:
+        if user.status is False:
+            return jsonify(Event1005('封号中'))
         token = user.make_token()       #加密
         r.set(token,str(user.id))
         return jsonify(Event0(token=token))

@@ -1,8 +1,9 @@
-from flask import jsonify,request,session, redirect, url_for
+from flask import jsonify,request,session, redirect, url_for,current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_whooshee import Whooshee
 from functools import wraps
 from flask_mail import Mail,Message
+from threading import Thread
 import redis
 
 db = SQLAlchemy()
@@ -22,11 +23,17 @@ def login_required(func):
         return func(token)
     return yes_or_no
 
+def send_async_email(app,msg):
+    with app.app_context():
+        mail.send(msg)
 
 #发送邮件函数
 def send_email(subject,to,body):
+    app = current_app._get_current_object()
     message = Message(subject=subject,recipients=[to],body=body)
-    mail.send(message)
+    thr = Thread(target=send_async_email,args=[app,message])
+    thr.start()
+    return thr
 
 
 def Event0(**kwargs):
