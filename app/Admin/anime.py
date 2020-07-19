@@ -136,9 +136,9 @@ def operateAnime(token):
 
 
 # 增加推荐anime, 减少推荐anime
-@admin.route('/operateadnime', methods=['POST', 'DELETE'])
+@admin.route('/ifshowadnime', methods=['POST', 'DELETE'])
 @admin_login
-def addAnime(token):
+def ifShowAnime(token):
     adminId = r.get(token)
     animeId = int(request.form.get('animeid'))
     if animeId is not None:
