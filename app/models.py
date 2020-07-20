@@ -164,7 +164,7 @@ class AnimeComment(db.Model):
     userId = db.Column(db.Integer, db.ForeignKey('user.id'))
     animeId = db.Column(db.Integer, db.ForeignKey('anime.id'))
     comment = db.Column(db.TEXT)
-    # time = db.Column(db.DateTime, default=datetime.utcnow)
+    time = db.Column(db.DateTime, default=datetime.utcnow)
     stars = db.relationship("AnimeCommentStar", backref='animecomment', cascade='all')
     starnum = db.Column(db.Integer, default=0)
 

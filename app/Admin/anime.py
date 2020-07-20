@@ -1,5 +1,5 @@
 from app.Admin import admin
-#from app.Admin.AnimeDatas import Animedatas
+from app.Admin.AnimeDatas import Animedatas
 from app.extensions import *
 from app.models import *
 from sqlalchemy import or_
@@ -18,7 +18,7 @@ def isIn(name, default):
 # 做个分页
 # 返回 封面 标题 标签
 @admin.route('/getallanime', methods=['POST'])
-@login_required
+@admin_login
 def getAllAnime(token):
     page = int(request.form.get('page'))
     tagId = request.form.get('tagid')
@@ -51,7 +51,7 @@ def getAllAnime(token):
 
 # 对单个anime的查删改
 @admin.route('/operateanime', methods=['GET', 'POST', 'DELETE', 'PUT'])
-@login_required
+@admin_login
 def operateAnime(token):
     adminId = r.get(token)
     animeId = int(request.form.get('animeid'))
@@ -136,9 +136,9 @@ def operateAnime(token):
 
 
 # 增加推荐anime, 减少推荐anime
-@admin.route('/operateadnime', methods=['POST', 'DELETE'])
-@login_required
-def addAnime(token):
+@admin.route('/ifshowadnime', methods=['POST', 'DELETE'])
+@admin_login
+def ifShowAnime(token):
     adminId = r.get(token)
     animeId = int(request.form.get('animeid'))
     if animeId is not None:
@@ -162,7 +162,7 @@ def addAnime(token):
 
 
 @admin.route('/animecomment', methods=['POST', 'DELETE'])
-@login_required
+@admin_login
 def animeComment(token):
     commentId = request.form.get('commentid')
     comment = AnimeComment.query.get(commentId)
