@@ -101,7 +101,7 @@ def recomment(token):
             file.filename = random_filename(file.filename)
             coverp = Photo(image= 'http://101.200.157.252/user/image/' + file.filename, drama_id=drama.id, cover=True)
             file.save(os.path.join(current_app.config['UPLOAD_PATH'], file.filename))
-            anime.photo = coverp.image
+            anime.picture = coverp.image
             db.session.add(coverp)
         for file in photo:
             file.filename = random_filename(file.filename)

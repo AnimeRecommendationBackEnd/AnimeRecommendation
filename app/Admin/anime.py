@@ -1,5 +1,5 @@
 from app.Admin import admin
-from app.Admin.AnimeDatas import Animedatas
+#from app.Admin.AnimeDatas import Animedatas
 from app.extensions import *
 from app.models import *
 from sqlalchemy import or_
@@ -11,8 +11,6 @@ def isIn(name, default):
         return data
     else:
         return default
-
-
 
 # 获取全部番
 # 做个分页
