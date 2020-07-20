@@ -96,7 +96,7 @@ class Drama(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20))  # 标题
     content = db.Column(db.Text)  # 内容
-    time = db.Column(db.DateTime, default=datetime.utcnow, index=True)  # 时间
+    time = db.Column(db.DateTime, default=datetime.now, index=True)  # 时间
     likes = db.relationship('Likedrama', back_populates='drama')  # 点赞
     collects = db.relationship('Collectdrama', back_populates='drama')  # 收藏
     photos = db.relationship('Photo', back_populates='drama', cascade='all')  # 图片包含封面图片和内容图片，会有标志区分
@@ -124,7 +124,7 @@ class Comment(db.Model):
     __tablename__ = "comment"
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text)  # 内容
-    time = db.Column(db.DateTime,default=datetime.utcnow,index=True)
+    time = db.Column(db.DateTime,default=datetime.now,index=True)
     author_id = db.Column(db.Integer)  # 评论人id
     author = db.Column(db.String(20))  # 评论人名
     email = db.Column(db.String(20))
@@ -187,6 +187,6 @@ class AnimeLog(db.Model):
     __tablename__ = 'adminlog'
     id = db.Column(db.Integer, primary_key=True)
     opreate = db.Column(db.TEXT)
-    time = db.Column(db.DateTime, default=datetime.utcnow)
+    time = db.Column(db.DateTime, default=datetime.now)
 
 
