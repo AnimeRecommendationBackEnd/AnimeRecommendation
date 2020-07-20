@@ -68,7 +68,7 @@ def operateAnime(token):
                 'username': comment.user.name,
                 'comment': comment.comment,
                 # 时间
-                # 'time': comment.time
+                'time': comment.time,
                 'starnum': comment.starnum,
             }
             commentlist.append(temp)
@@ -115,6 +115,7 @@ def operateAnime(token):
     # 手动删除一个anime
     elif request.method == 'DELETE':
         db.session.delete(anime)
+        db.session.commit()
         return jsonify(Event0(token=token))
     # 手动修改一个anime
     elif request.method == 'PUT':
@@ -136,7 +137,7 @@ def operateAnime(token):
 
 
 # 增加推荐anime, 减少推荐anime
-@admin.route('/ifshowadnime', methods=['POST', 'DELETE'])
+@admin.route('/ifshowanime', methods=['POST', 'DELETE'])
 @admin_login
 def ifShowAnime(token):
     adminId = r.get(token)
@@ -175,7 +176,7 @@ def animeComment(token):
                 "data": {
                     "userid": comment.user.id,
                     "username": comment.user.name,
-                    "text": comment.text,
+                    "text": comment.comment,
                     "time": comment.time,
                     "starnum": comment.starnum
                 }

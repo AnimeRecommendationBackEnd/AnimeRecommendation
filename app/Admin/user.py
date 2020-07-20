@@ -7,7 +7,7 @@ def deleteToken(userId):
     keys = r.keys()
     for key in keys:
         getId = str(r.get(key), encoding='utf8')
-        if getId == str(userId) and len(getId) != 32:
+        if getId == str(userId) and len(getId) > 33:
             r.delete(key)
 
 
@@ -56,15 +56,33 @@ def getUser(token):
     user = User.query.get(userId)
     comments = Comment.query.filter_by(author_id=userId)
     animecomments = AnimeComment.query.filter_by(userId=userId)
+    asks = Drama.query.filter(Drama.user_id == userId, Drama.solution != None)
+    recommends = Drama.query.filter(Drama.user_id == userId, Drama.solution == None)
+    asklist = []
+    recommendlist = []
     commentlist = []
     animecommentlist = []
+    for ask in asks:
+        temp = {
+            "dramaid": ask.id,
+            "title": ask.title,
+            "time": ask.time
+        }
+        asklist.append(temp)
+    for recommend in recommends:
+        cover = Photo.query.filter_by(drama_id=recommend.id,cover=True).first()
+        temp = {
+            "dramaid": recommend.id,
+            "title": recommend.title,
+            "cover": cover,
+            "time": recommend.time
+        }
+        recommendlist.append(temp)
     for comment in comments:
         temp = {
             "commentid": comment.id,
             "dramatitle": comment.drama.title,
             "dramaid": comment.drama.id,
-            "authorname": comment.author,
-            "authorid": comment.author_id,
             "content": comment.text,
             "time": comment.time
         }
@@ -74,15 +92,15 @@ def getUser(token):
             "commentid": animecomment.id,
             "animetitle": animecomment.anime.title,
             "animeid": animecomment.anime.id,
-            "authorname": animecomment.author,
-            "authorid": animecomment.author_id,
-            "content": animecomment.text,
+            "content": animecomment.comment,
             "time": animecomment.time
         }
         animecommentlist.append(temp)
     data = Giveuser(user)
     data['comments'] = commentlist
     data['animecomments'] = animecommentlist
+    data['asks'] = asklist
+    data['recommends'] = recommendlist
     return jsonify(
         {
             "status": 0,
