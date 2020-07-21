@@ -53,7 +53,7 @@ url = {
         }
     },
     '/user/get':{
-        'GET':{
+        'POST':{
         'page':'false',
         'userid':'false',
         'ask':'false'
@@ -112,7 +112,7 @@ url = {
         }
     },
     '/user/recommend/get':{
-        'GET':{
+        'POST':{
         'page':'false',
         'dramaid':'false',
         'ask':'false'
@@ -140,37 +140,37 @@ url = {
         }
     },
     '/user/ask/get':{
-        'GET':{
+        'POST':{
             'page': 'false',
             'dramaid': 'false',
             'ask': 'false'
         }
     },
     '/user/person':{
-        'GET':{
+        'POST':{
             'token':'true'
         }
     },
     '/user/person/fans':{
-        'GET':{
+        'POST':{
             'token':'true',
             'userid':'false'
         }
     },
     '/user/person/follower': {
-        'GET': {
+        'POST': {
             'token': 'true',
             'userid':'false'
         }
     },
     '/user/person/recommend': {
-        'GET': {
+        'POST': {
             'token': 'true',
             'userid':'false'
         }
     },
     '/user/person/ask': {
-        'GET': {
+        'POST': {
             'token': 'true',
             'userid':'false'
         }
