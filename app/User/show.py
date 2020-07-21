@@ -3,7 +3,7 @@ from app.User import User,Drama,Photo,Comment,Likedrama,Collectdrama,r
 from app.User import Event0,Event1001,Event1002,Event1003,Event1004,Event1005
 from app.User import Givedrama,Giveask,Giveuser,Giveperson,Givep_recommentd,Givep_ask
 
-@user.route('/get',methods=['GET'])
+@user.route('/get',methods=['POST'])
 def Getuser():
     userid = request.form.get('userid')
     ask = request.form.get('ask')
@@ -37,7 +37,7 @@ def Getuser():
     return jsonify(Event1002())
 
 
-@user.route('/recommend/get',methods=['GET'])
+@user.route('/recommend/get',methods=['POST'])
 def GetRecommend():
     dramaid = request.form.get('dramaid')
     ask = request.form.get('ask')
@@ -71,7 +71,7 @@ def GetRecommend():
     return jsonify(Event1002())
 
 
-@user.route('/ask/get',methods=['GET'])
+@user.route('/ask/get',methods=['POST'])
 def GetAsk():
     dramaid = request.form.get('dramaid')
     ask = request.form.get('ask')
@@ -108,7 +108,7 @@ def GetAsk():
 def index(filename):
     return send_from_directory(current_app.config['UPLOAD_PATH'], filename,as_attachment=True)
 
-@user.route('/person',methods=['GET'])
+@user.route('/person',methods=['POST'])
 @login_required
 def person(token):
     user = User.query.get(r.get(token))
@@ -117,7 +117,7 @@ def person(token):
         "data": Giveuser(user)
     })
 
-@user.route('/person/fans',methods=['GET'])
+@user.route('/person/fans',methods=['POST'])
 @login_required
 def fans(token):
     userid = request.form.get('userid')
@@ -138,7 +138,7 @@ def fans(token):
         "data": [{'fanid':fan.followed.id, 'avatar':fan.followed.avatar,'name':fan.followed.name} for fan in fans]
     })
 
-@user.route('/person/follower',methods=['GET'])
+@user.route('/person/follower',methods=['POST'])
 @login_required
 def followers(token):
     userid = request.form.get('userid')
@@ -160,7 +160,7 @@ def followers(token):
         "data": [{'followerid':follower.follower.id,'avatar':follower.follower.avatar,'name':follower.follower.name}for follower in followers]
     })
 
-@user.route('/person/recommend',methods=['GET'])
+@user.route('/person/recommend',methods=['POST'])
 @login_required
 def P_recommend(token):
     userid = request.form.get('userid')
@@ -178,7 +178,7 @@ def P_recommend(token):
         "data": [Givep_recommentd(drama) for drama in dramas]
     })
 
-@user.route('/person/ask',methods=['GET'])
+@user.route('/person/ask',methods=['POST'])
 @login_required
 def P_ask(token):
     userid = request.form.get('userid')
