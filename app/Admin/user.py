@@ -71,6 +71,10 @@ def getUser(token):
         asklist.append(temp)
     for recommend in recommends:
         cover = Photo.query.filter_by(drama_id=recommend.id,cover=True).first()
+        if cover:
+            cover = cover.image
+        else:
+            cover = None
         temp = {
             "dramaid": recommend.id,
             "title": recommend.title,

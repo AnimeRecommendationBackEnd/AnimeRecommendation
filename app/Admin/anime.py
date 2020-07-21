@@ -1,5 +1,5 @@
 from app.Admin import admin
-#from app.Admin.AnimeDatas import Animedatas
+from app.Admin.AnimeDatas import Animedatas
 from app.extensions import *
 from app.models import *
 from sqlalchemy import or_
@@ -51,14 +51,10 @@ def getAllAnime(token):
 @admin.route('/operateanime', methods=['GET', 'POST', 'DELETE', 'PUT'])
 @admin_login
 def operateAnime(token):
-    adminId = r.get(token)
-    animeId = int(request.form.get('animeid'))
-    if animeId is not None:
-        anime = Anime.query.get(animeId)
-    else:
-        return jsonify(Event1004())
     # 获取到单个anime
     if request.method == 'GET':
+        animeId = int(request.args.get("animeid"))
+        anime = Anime.query.get(animeId)
         commentlist = []
         for comment in anime.comments:
             temp = {
@@ -93,6 +89,12 @@ def operateAnime(token):
             }
         )
         pass
+    adminId = r.get(token)
+    animeId = int(request.form.get('animeid'))
+    if animeId is not None:
+        anime = Anime.query.get(animeId)
+    else:
+        return jsonify(Event1004())
     # 手动增加一个anime
     if request.method == 'POST':
         anime.seasonId = isIn('seasonid', anime.seasonId)

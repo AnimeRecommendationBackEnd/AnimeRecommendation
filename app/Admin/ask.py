@@ -3,12 +3,12 @@ from app.extensions import *
 from app.models import *
 
 
-@admin.route('getallask', methods=['POST'])
+@admin.route('/getallask', methods=['POST'])
 @admin_login
 def getAllAsk(token):
     adminId = r.get(token)
     admin = Admin.query.get(adminId)
-    page = request.form.get('page')
+    page = int(request.form.get('page'))
     solution = request.form.get('solution')
     if solution is not None:
         asks = Drama.query.filter(Drama.solution == solution).paginate(per_page=10, page=page).items
@@ -16,7 +16,13 @@ def getAllAsk(token):
         asks = Drama.query.filter(Drama.solution != None).paginate(per_page=10, page=page).items
     datalist = []
     for ask in asks:
-        data = Givep_ask(ask)
+        data = {
+            "askid": ask.id,
+            "asktitle": ask.title,
+            "authorid": ask.user.id,
+            "authorname":ask.user.name,
+            "time": ask.time
+        }
         datalist.append(data)
     return jsonify(
         {
@@ -27,7 +33,7 @@ def getAllAsk(token):
 
 
 
-@admin.route('operateask', methods=['POST', 'DELETE', 'PUT'])
+@admin.route('/operateask', methods=['POST', 'DELETE', 'PUT'])
 @admin_login
 def operateAsk(token):
     adminId = r.get(token)
@@ -53,14 +59,14 @@ def operateAsk(token):
         return jsonify(Event0(token=token))
 
 
-@admin.route('/askcomment', methods=['PSOT', 'DELETE'])
+@admin.route('/askcomment', methods=['POST', 'DELETE'])
 @admin_login
 # 查，删
 def askComment(token):
     adminId = r.get(token)
     admin = Admin.query.get(adminId)
     commentId = request.form.get('commentid')
-    comment = Drama.query.get(commentId)
+    comment = Comment.query.get(commentId)
     if request.method == 'POST':
         data = {
             "commentid": comment.id,

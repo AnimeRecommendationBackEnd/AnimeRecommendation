@@ -3,20 +3,21 @@ from app.extensions import *
 from app.models import *
 
 
-@admin.route('getallrecommend', methods=['POST'])
+@admin.route('/getallrecommend', methods=['POST'])
 @admin_login
 def getAllRecommend(token):
     adminId = r.get(token)
     admin = Admin.query.get(adminId)
-    page = request.form.get('page')
-    solution = request.form.get('solution')
-    if solution is not None:
-        recommends = Drama.query.filter(Drama.solution == solution).paginate(per_page=10, page=page).items
-    else:
-        recommends = Drama.query.filter(Drama.solution != None).paginate(per_page=10, page=page).items
+    page = int(request.form.get('page'))
+    recommends = Drama.query.filter(Drama.solution == None).paginate(per_page=10, page=page).items
     datalist = []
     for recommend in recommends:
-        data = Givep_recommentd(recommend)
+        data = {
+            "authorname": recommend.user.name,
+            "authorid": recommend.user.id,
+            "dramaid": recommend.id,
+            "title": recommend.title
+        }
         datalist.append(data)
     return jsonify(
         {
@@ -27,7 +28,7 @@ def getAllRecommend(token):
 
 
 
-@admin.route('operaterecommend', methods=['POST', 'DELETE', 'PUT'])
+@admin.route('/operaterecommend', methods=['POST', 'DELETE', 'PUT'])
 @admin_login
 def operateRecommend(token):
     adminId = r.get(token)
@@ -36,7 +37,21 @@ def operateRecommend(token):
     recommend = Drama.query.get(recommendId)
     # 获取当个详细
     if request.method == 'POST':
-        data = Givedrama(recommend)
+        photos = Photo.query.filter_by(drama_id=recommend.id, content=True).all()
+        animepictures = Photo.query.filter_by(drama_id=recommend.id, cover=True).first()
+        data =  {
+            "dramaid": recommend.id,
+            "authorid": recommend.user.id,
+            "authorname": recommend.user.name,
+            "title": recommend.title,
+            "content": recommend.content,
+            "time": recommend.time,
+            "cover": animepictures.image,
+            "photos": [photo.image for photo in photos],
+            "animeid": recommend.anime[0].id,
+            "comment": [Givecomment(comment) for comment in recommend.comments]
+        }
+        print(data)
         return jsonify(
             {
                 "status": 0,
@@ -53,14 +68,14 @@ def operateRecommend(token):
         return jsonify(Event0(token=token))
 
 
-@admin.route('/recommendcomment', methods=['PSOT', 'DELETE'])
+@admin.route('/recommendcomment', methods=['POST', 'DELETE'])
 @admin_login
 # 查，删
 def recommendComment(token):
     adminId = r.get(token)
     admin = Admin.query.get(adminId)
     commentId = request.form.get('commentid')
-    comment = Drama.query.get(commentId)
+    comment = Comment.query.get(commentId)
     if request.method == 'POST':
         data = {
             "commentid": comment.id,
