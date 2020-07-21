@@ -65,7 +65,7 @@ def getAnime():
                 'username': comment.user.name,
                 'comment': comment.comment,
                 # 时间
-                # 'time': comment.time
+                'time': comment.time,
                 'starnum': comment.starnum,
             }
             commentlist.append(temp)
@@ -114,10 +114,14 @@ def getAnime():
                 'comment': comment.comment,
                 'islike': isLike,
                 # 时间
-                # 'time': comment.time
+                'time': comment.time,
                 'starnum': comment.starnum,
             }
             commentlist.append(temp)
+        if AnimeLike.query.filter_by(userId=userId, animeId=animeId).first() is not None:
+            isLike = True
+        else:
+            isLike = False
         data = {
             'id': anime.id,
             'title': anime.title,
@@ -128,7 +132,7 @@ def getAnime():
             'link': anime.link,
             'isFinish': anime.isFinish,
             'likenum': anime.likenum,
-            'islike': False,
+            'islike': isLike,
             'comments': commentlist,
             'tag1': anime.tag1,
             'tag2': anime.tag2,
