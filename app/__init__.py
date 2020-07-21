@@ -21,6 +21,7 @@ def register_extensions(app):
     db.init_app(app)
     mail.init_app(app)
     whooshee.init_app(app)
+    migrate.init_app(app, db)
 
 
 def register_blueprint(app):

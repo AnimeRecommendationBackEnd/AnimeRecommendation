@@ -1,4 +1,5 @@
 from flask import jsonify,request,session, redirect, url_for,current_app
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_whooshee import Whooshee
 from functools import wraps
@@ -10,6 +11,7 @@ db = SQLAlchemy()
 mail = Mail()
 whooshee = Whooshee()
 r = redis.Redis()
+migrate = Migrate()
 
 from app.models import Photo,Drama
 
