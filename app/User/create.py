@@ -11,7 +11,6 @@ def follows(token):
         user = User.query.get(r.get(token))
         if User.query.get(userid) is None:
             return jsonify(Event1002())
-
         if user.follower.filter_by(followerid=userid).first() is not None:
             return jsonify(Event1005('你已关注该用户'))
         follow = Follow(followerid=userid,followedid=r.get(token))
@@ -23,9 +22,9 @@ def follows(token):
         user = User.query.get(r.get(token))
         if User.query.get(followid) is None:
             return jsonify(Event1005('该用户不存在'))
-        if user.followed.filter_by(followedid=followid).first() is None:
+        if user.follower.filter_by(followerid=followid).first() is None:
             return jsonify(Event1005('未关注该用户'))
-        follow = user.followed.filter_by(followedid=followid).first()
+        follow = user.follower.filter_by(followerid=followid).first()
         db.session.delete(follow)
         db.session.commit()
         if user.followed.filter_by(followedid=followid).first() is not None:
