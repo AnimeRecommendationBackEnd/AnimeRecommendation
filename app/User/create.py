@@ -11,7 +11,8 @@ def follows(token):
         user = User.query.get(r.get(token))
         if User.query.get(userid) is None:
             return jsonify(Event1002())
-        if user.followed.filter_by(followedid=userid).first() is not None:
+
+        if user.follower.filter_by(followerid=userid).first() is not None:
             return jsonify(Event1005('你已关注该用户'))
         follow = Follow(followerid=userid,followedid=r.get(token))
         db.session.add(follow)
