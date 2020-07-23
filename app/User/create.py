@@ -27,8 +27,6 @@ def follows(token):
         follow = user.follower.filter_by(followerid=followid).first()
         db.session.delete(follow)
         db.session.commit()
-        if user.followed.filter_by(followedid=followid).first() is not None:
-            return jsonify(Event1005('删除失败'))
         return jsonify(Event0(token=token))
 
 
