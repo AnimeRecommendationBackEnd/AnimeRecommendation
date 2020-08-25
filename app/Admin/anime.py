@@ -15,19 +15,25 @@ def isIn(name, default):
 # 获取全部番
 # 做个分页
 # 返回 封面 标题 标签
-@admin.route('/getallanime', methods=['POST'])
+@admin.route('/anime/getall', methods=['POST'])
 @admin_login
 def getAllAnime(token):
-    page = int(request.form.get('page'))
-    tagId = request.form.get('tagid')
-    isShow = int(request.form.get('isshow'))
     adminId = r.get(token)
+    try:
+        page = int(request.form.get('page'))
+
+    except:
+        return jsonify(Event1004())
+    tagId = request.form.get('tagid')
+    isShow = request.form.get('isshow')
+    animes = Anime.query.all()
     if isShow is not None:
-        animes = Anime.query.filter_by(isShow=isShow)
+        animes = Anime.query.filter_by(isShow=int(isShow))
     if tagId is not None:
-        animes = animes.filter(or_(Anime.tag1 == tagId, Anime.tag2 == tagId, Anime.tag3 == tagId)).paginate(per_page=10, page=page).items
+        animes = animes.filter(or_(Anime.tag1 == tagId, Anime.tag2 == tagId, Anime.tag3 == tagId))
+    animes = animes.paginate(per_page=10, page=page)
     datalist = []
-    for anime in animes:
+    for anime in animes.items:
         temp = {
             'id': anime.id,
             'title': anime.title,
@@ -41,14 +47,19 @@ def getAllAnime(token):
     return jsonify(
         {
             "status": 0,
-            "data": datalist
+            "data": {
+                "totalnum": animes.pages,
+                "hasnext": animes.has_next,
+                "haspre": animes.has_prev,
+                "datalist": datalist
+            }
         }
     )
 
 
 
 # 对单个anime的查删改
-@admin.route('/operateanime', methods=['GET', 'POST', 'DELETE', 'PUT'])
+@admin.route('/anime/operate', methods=['GET', 'POST', 'DELETE', 'PUT'])
 @admin_login
 def operateAnime(token):
     # 获取到单个anime
@@ -137,7 +148,7 @@ def operateAnime(token):
 
 
 # 增加推荐anime, 减少推荐anime
-@admin.route('/ifshowanime', methods=['POST', 'DELETE'])
+@admin.route('/anime/ifshow', methods=['POST', 'DELETE'])
 @admin_login
 def ifShowAnime(token):
     adminId = r.get(token)
@@ -162,7 +173,7 @@ def ifShowAnime(token):
             return jsonify(Event1005("已经设为不展示了"))
 
 
-@admin.route('/animecomment', methods=['POST', 'DELETE'])
+@admin.route('/anime/comment', methods=['POST', 'DELETE'])
 @admin_login
 def animeComment(token):
     commentId = request.form.get('commentid')
@@ -191,7 +202,7 @@ def animeComment(token):
 
 # 刷新完结动画推荐
 # 原先的不会删除，会被标记为不显示
-@admin.route('/refreshanime/', methods=['GET'])
+@admin.route('/anime/refresh', methods=['GET'])
 def refreshFinishedAnime():
     # adminLoginConfirm(name)
 

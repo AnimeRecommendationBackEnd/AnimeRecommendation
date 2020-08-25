@@ -3,19 +3,24 @@ from app.extensions import *
 from app.models import *
 
 
-@admin.route('/getallask', methods=['POST'])
+@admin.route('/ask/getall', methods=['POST'])
 @admin_login
 def getAllAsk(token):
     adminId = r.get(token)
     admin = Admin.query.get(adminId)
-    page = int(request.form.get('page'))
+    try:
+        page = int(request.form.get('page'))
+    except:
+        return jsonify(Event1004())
     solution = request.form.get('solution')
+    if page is None:
+        return jsonify(Event1004())
     if solution is not None:
-        asks = Drama.query.filter(Drama.solution == solution).paginate(per_page=10, page=page).items
+        asks = Drama.query.filter(Drama.solution == solution).paginate(per_page=10, page=page)
     else:
-        asks = Drama.query.filter(Drama.solution != None).paginate(per_page=10, page=page).items
+        asks = Drama.query.filter(Drama.solution != None).paginate(per_page=10, page=page)
     datalist = []
-    for ask in asks:
+    for ask in asks.items:
         data = {
             "askid": ask.id,
             "asktitle": ask.title,
@@ -27,18 +32,23 @@ def getAllAsk(token):
     return jsonify(
         {
             "status": 0,
-            "data": datalist
+            "data": {
+                "totalnum": asks.pages,
+                "hasnext": asks.has_next,
+                "haspre": asks.has_prev,
+                "datalist": datalist
+            }
         }
     )
 
 
 
-@admin.route('/operateask', methods=['POST', 'DELETE', 'PUT'])
+@admin.route('/ask/operate', methods=['POST', 'DELETE', 'PUT'])
 @admin_login
 def operateAsk(token):
     adminId = r.get(token)
     admin = Admin.query.get(adminId)
-    askId = request.form.get('askid')
+    askId = int(request.form.get('askid'))
     ask = Drama.query.get(askId)
     # 获取当个详细
     if request.method == 'POST':
@@ -53,13 +63,13 @@ def operateAsk(token):
     elif request.method == 'DELETE':
         question = request.form.get('question')
         message = "您的标题为" + ask.title + "的问番因" + question + "被管理员删除，特此予以警告"
+        send_email("警告", ask.user.email, message)
         db.session.delete(ask)
         db.session.commit()
-        send_email("警告", ask.user.email, message)
         return jsonify(Event0(token=token))
 
 
-@admin.route('/askcomment', methods=['POST', 'DELETE'])
+@admin.route('/ask/comment', methods=['POST', 'DELETE'])
 @admin_login
 # 查，删
 def askComment(token):

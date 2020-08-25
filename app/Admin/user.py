@@ -13,7 +13,7 @@ def deleteToken(userId):
 
 # 用户封号接口
 # 发邮件提醒
-@admin.route("/userlock", methods=['POST'])
+@admin.route("/user/lock", methods=['POST'])
 @admin_login
 def userLock(token):
     adminId = r.get(token)
@@ -30,7 +30,7 @@ def userLock(token):
 
 # 用户解封接口
 # 发邮件提醒
-@admin.route("/userunlock", methods=['POST'])
+@admin.route("/user/unlock", methods=['POST'])
 @admin_login
 def userUnLock(token):
     adminId = r.get(token)
@@ -47,7 +47,7 @@ def userUnLock(token):
 
 # 获取用户信息
 # 发布的问番，荐番，评论
-@admin.route('/getuser', methods=['POST'])
+@admin.route('/user/get', methods=['POST'])
 @admin_login
 def getUser(token):
     adminId = r.get(token)
