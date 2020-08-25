@@ -174,3 +174,6 @@ def Givep_ask(drama):
         'title': drama.title,
         'photo': [photo.image for photo in photos]
     }
+
+
+HOST = "47.99.197.94"
