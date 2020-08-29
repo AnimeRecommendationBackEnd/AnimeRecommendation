@@ -48,8 +48,13 @@ def getAllAsk(token):
 def operateAsk(token):
     adminId = r.get(token)
     admin = Admin.query.get(adminId)
-    askId = int(request.form.get('askid'))
+    try:
+        askId = int(request.form.get('askid'))
+    except:
+        return jsonify(Event1004())
     ask = Drama.query.get(askId)
+    if ask is None:
+        return jsonify(Event1002())
     # 获取当个详细
     if request.method == 'POST':
         data = Giveask(ask)
@@ -62,6 +67,8 @@ def operateAsk(token):
     # 发邮件提醒，删番
     elif request.method == 'DELETE':
         question = request.form.get('question')
+        if question is None:
+            return jsonify(Event1004())
         message = "您的标题为" + ask.title + "的问番因" + question + "被管理员删除，特此予以警告"
         send_email("警告", ask.user.email, message)
         db.session.delete(ask)
@@ -75,8 +82,13 @@ def operateAsk(token):
 def askComment(token):
     adminId = r.get(token)
     admin = Admin.query.get(adminId)
-    commentId = request.form.get('commentid')
+    try:
+        commentId = int(request.form.get('commentid'))
+    except:
+        return jsonify(Event1004())
     comment = Comment.query.get(commentId)
+    if comment is None:
+        return jsonify(Event1002())
     if request.method == 'POST':
         data = {
             "commentid": comment.id,
@@ -95,6 +107,8 @@ def askComment(token):
         )
     elif request.method == 'DELETE':
         question = request.form.get('question')
+        if question is None:
+            return jsonify(Event1004())
         message = "您的在标题为" + comment.drama.title + "下的的评论因" + question + "被管理员删除，特此予以警告"
         user = User.query.get(comment.author_id)
         send_email("警告", user.email, message)
