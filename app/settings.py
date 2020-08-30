@@ -1,8 +1,8 @@
 import os
 
 # MySQL数据库连接
-#SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:123456@127.0.0.1:3306/data?charset=utf8"
-SQLALCHEMY_DATABASE_URI = "mysql://root:123456@127.0.0.1:3306/data?charset=utf8"
+SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:123456@127.0.0.1:3306/data?charset=utf8"
+#SQLALCHEMY_DATABASE_URI = "mysql://root:123456@127.0.0.1:3306/data?charset=utf8"
 
 # 数据库追踪关闭
 SQLALCHEMY_TRACK_MODIFICATIONS = False
