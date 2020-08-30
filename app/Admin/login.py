@@ -10,7 +10,7 @@ def adminLogin():
 
     admin = Admin.query.filter_by(name=name).first()
     if admin is None:
-        return Event1002()
+        return jsonify(Event1002())
     token = admin.makeToken()
     r.set(token, str(admin.id))
     if admin.checkPwd(password):
